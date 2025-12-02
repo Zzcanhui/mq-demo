@@ -14,7 +14,6 @@ class SpringAmqpTest {
     private RabbitTemplate rabbitTemplate;
 
 
-
     @Test
     void testsimpleQueue() {
         // 队列名称
@@ -30,13 +29,23 @@ class SpringAmqpTest {
         // 队列名称
         String queueName = "work.queue";
         for (int i = 0; i < 50; i++) {
-                // 消息
-                String message = "hello, spring amqp!" + i;
-                // 发送消息
-                rabbitTemplate.convertAndSend(queueName, message);
+            // 消息
+            String message = "hello, spring amqp!" + i;
+            // 发送消息
+            rabbitTemplate.convertAndSend(queueName, message);
 
-            
+
         }
+    }
+
+    @Test
+    void testFanoutQueue() {
+        // 交换机名称
+        String exchangeName = "hmall.fanout";
+        // 消息
+        String message = "hello, fanout queue!";
+        // 发送消息
+        rabbitTemplate.convertAndSend(exchangeName, "", message);
     }
 
 
