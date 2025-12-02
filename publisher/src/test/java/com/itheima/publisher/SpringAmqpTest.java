@@ -5,6 +5,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -66,5 +69,14 @@ class SpringAmqpTest {
         String message = "测试";
         // 发送消息
         rabbitTemplate.convertAndSend(exchangeName, "china.aaa", message);
+    }
+
+    @Test
+    void testSendObject() {
+        Map<String,Object> msg =new HashMap<>(2);
+        msg.put("name","Jack");
+        msg.put("age",18);
+        // 发送消息
+        rabbitTemplate.convertAndSend( "object.queue", msg);
     }
 }
